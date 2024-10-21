@@ -89,3 +89,92 @@ func BenchmarkGetPerimeter(b *testing.B) {
 		<-pChan
 	}
 }
+
+// Test constructors ---
+func TestNewSquare(t *testing.T) {
+	tests := []struct {
+		name         string
+		inputSide    float64
+		expectedSide float64
+	}{{name: "Square side value", inputSide: 10, expectedSide: 10}}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+
+			sq := model.NewSquare(tc.inputSide)
+
+			if sq.Side != tc.expectedSide {
+				t.Errorf("Expected %v, got %v", tc.expectedSide, sq.Side)
+			}
+		})
+	}
+}
+func TestNewCircle(t *testing.T) {
+	tests := []struct {
+		name           string
+		inputRadius    float64
+		expectedRadius float64
+	}{{name: "Circle Radius value", inputRadius: 20, expectedRadius: 20}}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+
+			cir := model.NewCircle(tc.inputRadius)
+
+			if cir.Radius != tc.expectedRadius {
+				t.Errorf("Expected %v, got %v", tc.expectedRadius, cir.Radius)
+			}
+		})
+	}
+}
+func TestNewRectangle(t *testing.T) {
+	tests := []struct {
+		name            string
+		inputLength     float64
+		inputBreadth    float64
+		expectedLength  float64
+		expectedBreadth float64
+	}{{name: "Rectangle Length and Breadth value", inputLength: 20, inputBreadth: 30, expectedLength: 20, expectedBreadth: 30}}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+
+			rect := model.NewRectangle(tc.inputLength, tc.inputBreadth)
+
+			if rect.Length != tc.expectedLength {
+				t.Errorf("Expected %v, got %v", tc.expectedLength, rect.Length)
+			}
+			if rect.Breadth != tc.expectedBreadth {
+				t.Errorf("Expected %v, got %v", tc.expectedBreadth, rect.Breadth)
+			}
+		})
+	}
+}
+func TestNewTriangle(t *testing.T) {
+	tests := []struct {
+		name          string
+		inputSideA    float64
+		inputSideB    float64
+		inputSideC    float64
+		expectedSideA float64
+		expectedSideB float64
+		expectedSideC float64
+	}{{name: "Circle Radius value", inputSideA: 20, inputSideB: 25, inputSideC: 30, expectedSideA: 20, expectedSideB: 25, expectedSideC: 30}}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+
+			tri := model.NewTriangle(tc.inputSideA, tc.inputSideB, tc.inputSideC)
+
+			if tri.SideA != tc.expectedSideA {
+				t.Errorf("Expected %v, got %v", tc.expectedSideA, tri.SideA)
+			}
+			if tri.SideB != tc.expectedSideB {
+				t.Errorf("Expected %v, got %v", tc.expectedSideB, tri.SideB)
+			}
+			if tri.SideC != tc.expectedSideC {
+				t.Errorf("Expected %v, got %v", tc.expectedSideC, tri.SideC)
+			}
+		})
+	}
+}

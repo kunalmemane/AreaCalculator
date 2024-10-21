@@ -1,29 +1,96 @@
 package model
 
-import "math"
+import (
+	"math"
+)
 
 type IShape interface {
 	GetArea(chan float64)
 	GetPerimeter(chan float64)
 }
 
+// Request model
+type ShapeRequest struct {
+	Shape   string  `json:"shape"`
+	Side    float64 `json:"side"`
+	Radius  float64 `json:"radius"`
+	Length  float64 `json:"length"`
+	Breadth float64 `json:"breadth"`
+	SideA   float64 `json:"sideA"`
+	SideB   float64 `json:"sideB"`
+	SideC   float64 `json:"sideC"`
+}
+
+// Shape Dimension model
+type ShapeDimensions struct {
+	Side    float64 `json:"side,omitempty"`
+	Radius  float64 `json:"radius,omitempty"`
+	Length  float64 `json:"length,omitempty"`
+	Breadth float64 `json:"breadth,omitempty"`
+	SideA   float64 `json:"sideA,omitempty"`
+	SideB   float64 `json:"sideB,omitempty"`
+	SideC   float64 `json:"sideC,omitempty"`
+}
+
+// Final shape response
+type ShapeResponse struct {
+	Shape      string          `json:"shape"`
+	Dimensions ShapeDimensions `json:"dimensions"`
+	Area       string          `json:"area"`
+	Perimeter  string          `json:"perimeter"`
+}
+
+// Final API response
+type APIResponse struct {
+	Success   bool          `json:"success"`
+	Shape     ShapeResponse `json:"data"`
+	Timestamp string        `json:"timestamp"`
+}
+
+// Error response
+type ErrorResponse struct {
+	Success    bool   `json:"success"`
+	Error      string `json:"message"`
+	StatusCode int    `json:"statusCode"`
+}
+
+// Square
 type Square struct {
 	Side float64
 }
 
+func NewSquare(side float64) *Square {
+	return &Square{Side: side}
+}
+
+// Circle
 type Circle struct {
 	Radius float64
 }
 
+func NewCircle(radius float64) *Circle {
+	return &Circle{Radius: radius}
+}
+
+// Rectangle
 type Rectangle struct {
 	Length  float64
 	Breadth float64
 }
 
+func NewRectangle(length float64, breadth float64) *Rectangle {
+	return &Rectangle{Length: length, Breadth: breadth}
+}
+
+// Triangle
 type Triangle struct {
 	SideA float64
 	SideB float64
 	SideC float64
+}
+
+func NewTriangle(sideA float64, sideB float64, sideC float64) *Triangle {
+	return &Triangle{SideA: sideA, SideB: sideB, SideC: sideC}
 }
 
 // Square
