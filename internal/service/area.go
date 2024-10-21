@@ -1,4 +1,4 @@
-package area
+package service
 
 import (
 	"fmt"
@@ -6,7 +6,7 @@ import (
 	"github.com/kunalmemane9150/AreaCalculator/internal/model"
 )
 
-func CalculateArea(shapes model.IShape) {
+func Calculate(shapes model.IShape) (string, string) {
 	areaChan := make(chan float64)
 	pChan := make(chan float64)
 
@@ -16,6 +16,8 @@ func CalculateArea(shapes model.IShape) {
 	shapeArea := <-areaChan
 	shapePerimeter := <-pChan
 
-	fmt.Printf("Area: %.3f\n", shapeArea)
-	fmt.Printf("Perimeter: %.3f\n", shapePerimeter)
+	area := fmt.Sprintf("%.3f", shapeArea)
+	perimeter := fmt.Sprintf("%.3f", shapePerimeter)
+
+	return area, perimeter
 }
