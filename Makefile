@@ -1,3 +1,5 @@
+.PHONY: build test clean run help all docker-build docker-push oc-deploy oc-delete
+
 APP_NAME = area-calculator
 IMAGE_TAG = quay.io/rh-ee-kmemane/${APP_NAME}
 
@@ -57,4 +59,3 @@ oc-delete:
 	oc project ${APP_NAME}
 	oc delete all --all
 
-.PHONY: build test clean run help all docker-build docker-push
