@@ -117,7 +117,9 @@ This project includes a `Makefile` to simplify common tasks. You can use the fol
 - **`podman-run`**: Run Application Container Image.
 - **`podman-push`**: Push Application Image to quay.io _**- podman login required.**_
 - **`oc-deploy`**: Deploy application to openshift using docker strategy _**- oc login required.**_
+
 - **`oc-delete`**: Delete all resources in openshift project _**- oc login required.**_
+
 
 ## Contribute
 Contributions are welcome! Please feel free to submit a Pull Request or open an Issue for discussion.
