@@ -1,18 +1,23 @@
-[![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/kunalmemane/AreaCalculator)](https://github.com/kunalmemane/AreaCalculator/blob/main/go.mod) [![license](https://img.shields.io/github/license/kunalmemane/AreaCalculator)](https://github.com/kunalmemane/AreaCalculator/blob/main/LICENSE) ![GitHub Repo stars](https://img.shields.io/github/stars/kunalmemane/AreaCalculator?style=flat&logo=github)
+[![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/kunalmemane/AreaCalculator?logo=go&color=%2300ADD8)](https://github.com/kunalmemane/AreaCalculator/blob/main/go.mod) [![license](https://img.shields.io/github/license/kunalmemane/AreaCalculator)](https://github.com/kunalmemane/AreaCalculator/blob/main/LICENSE) ![GitHub Repo stars](https://img.shields.io/github/stars/kunalmemane/AreaCalculator?style=flat&logo=github)  ![GitHub Issues or Pull Requests](https://img.shields.io/github/issues-pr/kunalmemane/AreaCalculator?logo=github)
 
 
 # Area Calculator
 
-A simple Application Programming interface  (API) written in Go to calculate the area and perimeter of various geometric shapes.
+The Area Calculator API provides a simple and efficient way to compute the area of various geometric shapes, including square, circles, rectangles, triangles, and more.
+
+<img src="https://www.shutterstock.com/image-vector/perimeter-area-square-formula-mathematics-600nw-2325901341.jpg" style="width:100%">
+credits: shutterstock.com
 
 ## Table of Contents
 
 - [Features](#features)
+- [Prerequisite](#prerequisite)
 - [Installation](#installation)
 - [Supported Shapes](#supported-shapes)
 - [Usage](#usage)
-- [Contribute](#contribute)
 - [Test](#test)
+- [Makefile](#makefile)
+- [Contribute](#contribute)
 - [License](#license)
 
 ## Features
@@ -22,6 +27,15 @@ A simple Application Programming interface  (API) written in Go to calculate the
 - Formatted response
 - Efficient error handling
 
+## Prerequisite
+Before you begin, ensure you have met the following requirements:
+
+- **Go**: You need to have Go **v1.21+** installed on your machine. Download it from the [official Go website](https://golang.org/dl/).
+  
+  To check if Go is installed, run:
+  ```bash
+  go version
+    ```
 ## Installation
 
 To get started with the Area Calculator, follow these steps:
@@ -29,7 +43,7 @@ To get started with the Area Calculator, follow these steps:
 1. Clone the repository:
    ```bash
    git clone https://github.com/kunalmemane/AreaCalculator.git
-   cd area-calculator
+   cd AreaCalculator
     ```
 2. Build the application:
     ``` bash
@@ -87,6 +101,23 @@ To calculate the area of multiple shapes, use the following curl command:
 
         go test ./...
     ``` 
+
+## Makefile
+This project includes a `Makefile` to simplify common tasks. You can use the following commands:
+
+
+### Available Commands
+
+- **`make build`**: Compile the project.
+- **`make run`**: Build and run the application.
+- **`make test`**: Run the tests for the project.
+- **`make clean`**: Remove build artifacts.
+- **`make all`**: To do clean, test, build, run tasks in one command.
+- **`podman-build`**: Build Application Image using Podman.
+- **`podman-run`**: Run Application Container Image.
+- **`podman-push`**: Push Application Image to quay.io _**- podman login required.**_
+- **`oc-deploy`**: Deploy application to openshift using docker strategy _**- oc login required.**_
+
 ## Contribute
 Contributions are welcome! Please feel free to submit a Pull Request or open an Issue for discussion.
 
