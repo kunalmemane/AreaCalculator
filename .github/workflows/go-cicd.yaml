@@ -57,7 +57,7 @@ jobs:
   # s2i build and upload to quay
     - name: Install s2i
       run: |
-        curl -Lo s2i https://github.com/openshift/source-to-image/releases/latest/download/s2i-linux-amd64
+        curl -Lo s2i https://github.com/openshift/source-to-image/releases/download/v1.4.0/source-to-image-v1.4.0-d3544c7e-linux-amd64.tar.gz
         chmod +x s2i
         sudo mv s2i /usr/local/bin/
         s2i version
