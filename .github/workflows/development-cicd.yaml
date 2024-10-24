@@ -1,6 +1,7 @@
 name: Go Test
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - development  # Trigger on push to the development branch
