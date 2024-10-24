@@ -1,4 +1,4 @@
-.PHONY: build test clean run help all docker-build docker-push oc-deploy oc-delete check-podman-login check-oc-login
+.PHONY: build test clean run help all docker-build docker-push oc-deploy oc-delete check-podman-login check-oc-login changelog
 
 APP_NAME = area-calculator
 IMAGE_REGISTRY = quay.io

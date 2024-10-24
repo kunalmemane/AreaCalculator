@@ -66,10 +66,9 @@ jobs:
     #   uses: redhat-actions/s2i-build@v2
     #   with:
     #     path_context: '.'
-    #     # Builder image for a java project
-    #     builder_image: 'registry.access.redhat.com/openjdk/openjdk-11-rhel7'
-    #     image: ${{ env.IMAGE_NAME }}
-    #     tags: ${{ env.TAGS }}
+    #     builder_image: 'quay.io/rh-ee-kmemane/go-s2i-builder'
+    #     image: quay.io/rh-ee-kmemane/area-calculator
+    #     tags: v1.0
 
     - name: Verify s2i version
       run:  sudo s2i version
