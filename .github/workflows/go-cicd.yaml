@@ -60,7 +60,9 @@ jobs:
         curl -Lo s2i https://github.com/openshift/source-to-image/releases/download/v1.4.0/source-to-image-v1.4.0-d3544c7e-linux-amd64.tar.gz
         chmod +x s2i
         sudo mv s2i /usr/local/bin/
-        s2i version
+        
+    - name: Verify s2i version
+      run:  s2i version
         
     - name: s2i-build
       run: |
