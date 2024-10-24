@@ -1,0 +1,73 @@
+name: Test, Build and Release Area Calculator
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'v*'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: '1.22'
+
+    - name: Generate changelog
+      run: |
+        make changelog | tee -a changelog
+        cat changelog    
+    
+    - name: Test
+      run: make test
+
+    - name: Build
+      run: make build
+
+    - name: Set binary absolute path
+      run: |
+        binary_path=$(pwd)/bin/main
+        echo "BIN_PATH=${binary_path}" >> $GITHUB_ENV
+    
+    - name: Create release
+      id: create_release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        tag: ${{ github.ref_name }}
+      run: |
+        gh release create avg-${{ github.ref_name }}-x86_64 \
+            --repo="$GITHUB_REPOSITORY" \
+            --title="${GITHUB_REPOSITORY#*/} ${tag#v}" \
+            --notes-file changelog
+    
+    - name: Upload Artifact
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        tag: ${{ github.ref_name }}
+      run: |
+        gh release upload avg-${{ github.ref_name }}-x86_64 ${{ env.BIN_PATH }} --clobber
+
+  # s2i build and upload to quay
+    - name: Install s2i
+      run: |
+        curl -Lo s2i https://github.com/openshift/source-to-image/releases/latest/download/s2i-linux-amd64
+        chmod +x s2i
+        sudo mv s2i /usr/local/bin/
+        s2i version
+        
+    - name: s2i-build
+      run: |
+        s2i build . quay.io/rh-ee-kmemane/go-s2i-builder quay.io/rh-ee-kmemane/area-calculator
+        docker images
+      
+    - name: Push Application image to quay
+      run: |
+        echo "${{ secrets.QUAY_PASSWORD }}" | docker login quay.io -u "${{ secrets.QUAY_USERNAME }}" --password-stdin
+        docker push quay.io/rh-ee-kmemane/area-calculator

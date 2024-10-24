@@ -37,6 +37,9 @@ all:
 	make build
 	make run
 
+changelog:
+	@./script/changelog.sh
+
 # Podman recipes
 check-podman-login:
 	@if podman login $(IMAGE_REGISTRY) --get-login; \
