@@ -55,29 +55,31 @@ jobs:
         gh release upload avg-${{ github.ref_name }}-x86_64 ${{ env.BIN_PATH }} --clobber
 
   # s2i build and upload to quay
-    # - name: Install s2i
-    #   run: |
-    #     curl -Lo s2i https://github.com/openshift/source-to-image/releases/download/v1.4.0/source-to-image-v1.4.0-d3544c7e-linux-amd64.tar.gz
-    #     chmod +x s2i
-    #     sudo mv s2i /usr/local/bin/
-        
-    - name: Install Homebrew
+    - name: Install s2i
       run: |
-        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        wget https://github.com/openshift/source-to-image/releases/download/v1.1.14/source-to-image-v1.1.14-874754de-linux-386.tar.gz
+        tar -xvf source-to-image-v1.1.14-874754de-linux-386.tar.gz
+        sudo mv s2i /usr/local/bin
 
-    - name: Install S2I
-      run: |
-        brew install source-to-image
+    # - name: Setup and Build
+    #   id: build_image
+    #   uses: redhat-actions/s2i-build@v2
+    #   with:
+    #     path_context: '.'
+    #     # Builder image for a java project
+    #     builder_image: 'registry.access.redhat.com/openjdk/openjdk-11-rhel7'
+    #     image: ${{ env.IMAGE_NAME }}
+    #     tags: ${{ env.TAGS }}
 
     - name: Verify s2i version
-      run:  s2i version
+      run:  sudo s2i version
         
     - name: s2i-build
       run: |
-        s2i build . quay.io/rh-ee-kmemane/go-s2i-builder quay.io/rh-ee-kmemane/area-calculator
-        docker images
+        sudo s2i build . quay.io/rh-ee-kmemane/go-s2i-builder quay.io/rh-ee-kmemane/area-calculator
+        sudo docker images
       
     - name: Push Application image to quay
       run: |
-        echo "${{ secrets.QUAY_PASSWORD }}" | docker login quay.io -u "${{ secrets.QUAY_USERNAME }}" --password-stdin
-        docker push quay.io/rh-ee-kmemane/area-calculator
+        sudo docker login quay.io -u "${{ secrets.QUAY_USERNAME }}" -p "${{ secrets.QUAY_PASSWORD }}" 
+        sudo docker push quay.io/rh-ee-kmemane/area-calculator
