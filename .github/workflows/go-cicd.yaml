@@ -55,12 +55,20 @@ jobs:
         gh release upload avg-${{ github.ref_name }}-x86_64 ${{ env.BIN_PATH }} --clobber
 
   # s2i build and upload to quay
-    - name: Install s2i
-      run: |
-        curl -Lo s2i https://github.com/openshift/source-to-image/releases/download/v1.4.0/source-to-image-v1.4.0-d3544c7e-linux-amd64.tar.gz
-        chmod +x s2i
-        sudo mv s2i /usr/local/bin/
+    # - name: Install s2i
+    #   run: |
+    #     curl -Lo s2i https://github.com/openshift/source-to-image/releases/download/v1.4.0/source-to-image-v1.4.0-d3544c7e-linux-amd64.tar.gz
+    #     chmod +x s2i
+    #     sudo mv s2i /usr/local/bin/
         
+    - name: Install Homebrew
+      run: |
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+    - name: Install S2I
+      run: |
+        brew install source-to-image
+
     - name: Verify s2i version
       run:  s2i version
         
