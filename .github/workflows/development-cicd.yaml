@@ -59,6 +59,12 @@ jobs:
       
       - name: Deploy application
         run: |
+
+          if oc get svc -l app=area-calculator --ignore-not-found; then
+            oc delete svc,deployment,route,imagestream --selector app=area-calculator;
+            echo "deleted all resources with label app=area-calculator";
+          fi
+
           oc new-app quay.io/rh-ee-kmemane/area-calculator --name=area-calculator
           oc expose svc area-calculator
           oc get routes
