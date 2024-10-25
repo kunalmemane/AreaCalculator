@@ -32,7 +32,7 @@ for type in "${!tag_map[@]}"; do
 
     if git log "$PREVIOUS_TAG..$LATEST_TAG" --pretty='%h - %s (%an)' | grep -q "$type"; then
         echo -e "\n### $title \n"
-    
+
        git log "$PREVIOUS_TAG..$LATEST_TAG" --pretty='%h - %s (%an)' | awk -v type="$type" '$0 ~ "^.{10}(" type ": )" { sub(type ": ", ""); print }'
     fi 
 done
