@@ -1,4 +1,4 @@
-name: Go Test
+name: Test, Build and Deploy Area Calculator in Development
 
 on:
   workflow_dispatch:
@@ -17,16 +17,15 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
-          go-version: '1.22'  # Specify the Go version you want to use
+          go-version: '1.22'  
 
       - name: Run tests
-        run: make test  # Run all tests
+        run: make test  
       
       - name: Build application
         run: make build
       
       # Setup S2i and Build container image
-        # s2i build and upload to quay
       - name: Install s2i
         run: |
           wget https://github.com/openshift/source-to-image/releases/download/v1.1.14/source-to-image-v1.1.14-874754de-linux-386.tar.gz
@@ -35,22 +34,21 @@ jobs:
       
       - name: s2i-build
         run: |
-          sudo s2i build . quay.io/rh-ee-kmemane/go-s2i-builder quay.io/rh-ee-kmemane/area-calculator
+          sudo s2i build . quay.io/rh-ee-kmemane/go-s2i-builder  quay.io/rh-ee-kmemane/area-calculator-development
           sudo docker images
           
       # Push Image to Quay registry
       - name: Push Application image to quay
         run: |
           sudo docker login quay.io -u "${{ secrets.QUAY_USERNAME }}" -p "${{ secrets.QUAY_PASSWORD }}" 
-          sudo docker push quay.io/rh-ee-kmemane/area-calculator
+          sudo docker push quay.io/rh-ee-kmemane/area-calculator-development
         
-      # deploy application in resource hub
+      # deploy application in ocp cluster
       - name: Authenticate and set context
         uses: redhat-actions/oc-login@v1
         env:
           OPENSHIFT_USER: rh-ee-kmemane
           OPENSHIFT_NAMESPACE: rh-ee-kmemane-dev
-
         with:
           openshift_server_url: ${{ secrets.OPENSHIFT_SERVER }}
           openshift_token: ${{ secrets.OPENSHIFT_TOKEN }}
@@ -59,12 +57,12 @@ jobs:
       
       - name: Deploy application
         run: |
-
-          if oc get svc -l app=area-calculator --ignore-not-found; then
-            oc delete svc,deployment,route,imagestream --selector app=area-calculator;
-            echo "deleted all resources with label app=area-calculator";
+          if oc get svc -l app=area-calculator-dev --ignore-not-found; then
+            oc delete svc,deployment,route,imagestream --selector app=area-calculator-dev;
+            echo "deleted all resources with label app=area-calculator-dev";
           fi
 
-          oc new-app quay.io/rh-ee-kmemane/area-calculator --name=area-calculator
-          oc expose svc area-calculator
-          oc get routes
+          oc new-app quay.io/rh-ee-kmemane/area-calculator-development --name=area-calculator-dev --labels=app=area-calculator-dev,env=dev
+
+          oc expose svc area-calculator-dev --labels=env=dev
+          oc get routes -l app=area-calculator-dev
