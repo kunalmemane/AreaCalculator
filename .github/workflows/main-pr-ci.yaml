@@ -1,4 +1,4 @@
-name: Test and Build Area Calculator on PR against main
+name: PR against main CI
 
 on:
   workflow_dispatch:

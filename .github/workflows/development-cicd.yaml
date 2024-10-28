@@ -1,4 +1,4 @@
-name: Test, Build and Deploy Area Calculator in Development
+name: Development CICD
 
 on:
   workflow_dispatch:
