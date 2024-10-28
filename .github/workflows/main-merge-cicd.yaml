@@ -1,4 +1,4 @@
-name: Test, Build and Deploy Area Calculator in Production
+name: Production CICD
 
 on:
   workflow_dispatch:

@@ -80,4 +80,4 @@ oc-deploy: check-oc-login
 
 oc-delete:
 	oc project $(APP_NAME)
-	oc delete all --all
+	oc delete all --selector=app=${APP_NAME}
