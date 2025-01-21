@@ -2,7 +2,7 @@
 
 APP_NAME = area-calculator
 IMAGE_REGISTRY = quay.io
-IMAGE_TAG = $(IMAGE_REGISTRY)/rh-ee-kmemane/$(APP_NAME)
+IMAGE_TAG = $(IMAGE_REGISTRY)/kmemane/$(APP_NAME)
 
 help:
 	@echo "Make - Area Calculator:"
