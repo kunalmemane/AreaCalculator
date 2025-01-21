@@ -113,11 +113,11 @@ This project includes a `Makefile` to simplify common tasks. You can use the fol
 - **`make test`**: Run the tests for the project.
 - **`make clean`**: Remove build artifacts.
 - **`make all`**: To do clean, test, build, run tasks in one command.
-- **`podman-build`**: Build Application Image using Podman.
-- **`podman-run`**: Run Application Container Image.
-- **`podman-push`**: Push Application Image to quay.io _**- podman login required.**_
-- **`oc-deploy`**: Deploy application to openshift using docker strategy _**- oc login required.**_
-- **`oc-delete`**: Delete all resources in openshift project _**- oc login required.**_
+- **`make podman-build`**: Build Application Image using Podman.
+- **`make podman-run`**: Run Application Container Image.
+- **`make podman-push`**: Push Application Image to quay.io _**- podman login required.**_
+- **`make oc-deploy`**: Deploy application to openshift using docker strategy _**- oc login required.**_
+- **`make oc-delete`**: Delete all resources in openshift project _**- oc login required.**_
 
 ## Contribute
 Contributions are welcome! Please feel free to submit a Pull Request or open an Issue for discussion.
