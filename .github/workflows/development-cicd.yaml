@@ -34,14 +34,14 @@ jobs:
       
       - name: s2i-build
         run: |
-          sudo s2i build . quay.io/rh-ee-kmemane/go-s2i-builder  quay.io/rh-ee-kmemane/area-calculator-development
+          sudo s2i build . quay.io/kmemane/go-s2i-builder  quay.io/kmemane/area-calculator-development
           sudo docker images
           
       # Push Image to Quay registry
       - name: Push Application image to quay
         run: |
           sudo docker login quay.io -u "${{ secrets.QUAY_USERNAME }}" -p "${{ secrets.QUAY_PASSWORD }}" 
-          sudo docker push quay.io/rh-ee-kmemane/area-calculator-development
+          sudo docker push quay.io/kmemane/area-calculator-development
         
       # deploy application in ocp cluster
       - name: Authenticate and set context
@@ -62,7 +62,7 @@ jobs:
             echo "deleted all resources with label app=area-calculator-dev";
           fi
 
-          oc new-app quay.io/rh-ee-kmemane/area-calculator-development --name=area-calculator-dev --labels=app=area-calculator-dev,env=dev
+          oc new-app quay.io/kmemane/area-calculator-development --name=area-calculator-dev --labels=app=area-calculator-dev,env=dev
 
           oc expose svc area-calculator-dev --labels=env=dev
           oc get routes -l app=area-calculator-dev
