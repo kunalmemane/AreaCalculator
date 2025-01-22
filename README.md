@@ -55,7 +55,7 @@ To get started with the Area Calculator, follow these steps:
     ./bin/main
     ```
 
-The API will be available at http://localhost:8080/
+The API will be available at http://localhost:8080/getArea
 
 
 ## Supported Shapes
